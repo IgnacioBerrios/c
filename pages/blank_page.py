@@ -273,7 +273,7 @@ elif st.session_state.page == "categoría_2":
                 ax.set_ylabel('Canción')
             plt.tight_layout()
             st.pyplot(fig)
-        elif st.session_state.subpage == "subcategoria_e":
+elif st.session_state.subpage == "subcategoria_e":
     # Función para cargar datos, con manejo de errores y cacheo
     @st.cache_data
     def datos_cargados():
