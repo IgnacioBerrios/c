@@ -104,40 +104,34 @@ def cambiar_pagina(nueva_pagina):
     if nueva_pagina != "categoría_2":
         st.session_state.subpage = None  # Resetear la subpágina solo si no estamos en "categoría_2"
 
-# Función para cambiar la subpágina dentro de "Tipos"
 def cambiar_subpagina(nueva_subpagina):
     st.session_state.subpage = nueva_subpagina
 
-# Título de la aplicación
-st.title("Aplicación Genérica")
+st.title("Spotify Dataset")
 
-# Mostrar botones solo si estamos en la página de inicio
 if st.session_state.page == "inicio":
     st.header("Seleccione una opción")
     
-    # Utilizar columnas para alinear los botones horizontalmente
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        if st.button("Opción 1"):
+        if st.button("Dataset"):
             cambiar_pagina("categoría_1")
     with col2:
-        if st.button("Opción 2"):
+        if st.button("Gaficos"):
             cambiar_pagina("categoría_2")
     
     with col3:
-        if st.button("Opción 3"):
+        if st.button("Conclusiones"):
             cambiar_pagina("categoría_3")
 
-# Mostrar contenido según la página seleccionada
 elif st.session_state.page == "categoría_1":
-    opciones = ["Todo"] + pf.columns.tolist()  # Agregar "Todo" a las opciones
+    opciones = ["Todo"] + pf.columns.tolist()  
     seleccion = st.selectbox("Selecciona una columna para ver", opciones)
 
-    # Mostrar el DataFrame completo o la columna seleccionada
     if seleccion == "Todo":
         st.write("Base de datos completa:")
-        st.dataframe(pf)  # Muestra todo el DataFrame
+        st.dataframe(pf) 
     else:
         st.write(f"Columna seleccionada: {seleccion}")
         st.write(pf[seleccion])
@@ -145,10 +139,8 @@ elif st.session_state.page == "categoría_1":
         cambiar_pagina("inicio")
 
 elif st.session_state.page == "categoría_2":
-    # Manejar las subpáginas de la categoría "Opción 2"
     if st.session_state.subpage is None:
         st.header("Seleccione una subcategoría")
-        # Mostrar botones para las subcategorías
         if st.button("Gráfico de Contenido Explícito"):
             cambiar_subpagina("subcategoria_a")
         if st.button("Distribución de Idioma de Canciones"):
@@ -157,13 +149,12 @@ elif st.session_state.page == "categoría_2":
             cambiar_subpagina("subcategoria_c")
         if st.button("Duración Promedio por Género"):
             cambiar_subpagina("subcategoria_d")
-        if st.button("Subcategoría E"):
+        if st.button("Duración vs Reproducciónes"):
             cambiar_subpagina("subcategoria_e")
         
         if st.button("Volver atrás"):
             cambiar_pagina("inicio")
     
-    # Manejo de subpáginas específicas
     else:
         if st.session_state.subpage == "subcategoria_a":
             st.header("Subcategoría A: Contenido Explícito")
@@ -255,7 +246,6 @@ elif st.session_state.page == "categoría_2":
             seleccionar_genero = st.selectbox("Selecciona un género de música:", options=['Todos'] + list(genero_unico))
             fig, ax = plt.subplots(figsize=(10, 6))
             if seleccionar_genero == 'Todos':
-                # Calcular la duración promedio por género y mostrarlo
                 duracion_por_genero = genero_filtrado.groupby('genre')['duration'].mean().sort_values()
                 
                 duracion_por_genero.plot(kind='barh', ax=ax, color='skyblue')
@@ -263,10 +253,8 @@ elif st.session_state.page == "categoría_2":
                 ax.set_xlabel('Duración Promedio (segundos)')
                 ax.set_ylabel('Género')
             else:
-                # Filtrar datos solo para el género seleccionado
                 canciones_genero = genero_filtrado[genero_filtrado['genre'] == seleccionar_genero]
                 
-                # Graficar las duraciones individuales para el género seleccionado
                 ax.barh(canciones_genero.index, canciones_genero['duration'], color='red')
                 ax.set_title(f'Duración de Canciones en Género: {seleccionar_genero}')
                 ax.set_xlabel('Duración (segundos)')
@@ -275,27 +263,23 @@ elif st.session_state.page == "categoría_2":
             st.pyplot(fig)
             
         elif st.session_state.subpage == "subcategoria_e":
-            st.header("Subcategoría E: Gráfico de Dispersión (Duración vs Reproducciones)")
+            st.header("Duración vs Reproducciones")
             st.markdown("Este gráfico muestra cómo la duración de las canciones se relaciona con las reproducciones, categorizado por género.")
 
-            # Verificar que las columnas necesarias existan en el dataset
             if pf.empty or 'duration' not in pf.columns or 'stream' not in pf.columns:
                 st.error("El dataset no contiene las columnas necesarias para generar el gráfico.")
             else:
-                # Selección de géneros
                 genres = pf['genre'].dropna().unique()
                 selected_genres = st.multiselect("Selecciona uno o varios géneros:", options=genres)
 
                 if not selected_genres:
                     st.warning("Selecciona al menos un género para mostrar el gráfico.")
                 else:
-                    # Filtrar el dataset por los géneros seleccionados
                     filtered_data = pf[pf['genre'].isin(selected_genres)]
 
                     if filtered_data.empty:
                         st.warning("No hay datos disponibles para los géneros seleccionados.")
                     else:
-                        # Crear el gráfico de dispersión interactivo
                         fig = px.scatter(
                             filtered_data,
                             x='duration',
@@ -308,10 +292,8 @@ elif st.session_state.page == "categoría_2":
                             opacity=0.7
                         )
 
-                        # Mostrar el gráfico
                         st.plotly_chart(fig)
 
-            # Botón para volver
             if st.button("Volver atrás"):
                 st.session_state.subpage = None
 
