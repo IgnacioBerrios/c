@@ -301,43 +301,50 @@ elif st.session_state.page == "categoría_2":
                 # Título y descripción
                 st.title("Reproducciones según fecha de publicación")
                 st.markdown(
-                    "Selecciona un género para observar cómo se distribuyen las reproducciones según la fecha de publicación."
+                    "Selecciona uno o varios géneros para observar cómo se distribuyen las reproducciones según la fecha de publicación."
                 )
         
-                # Dropdown para seleccionar géneros
+                # Multiselect para seleccionar múltiples géneros
                 genres = pf['genre'].dropna().unique()  # Obtener géneros únicos
-                selected_genre = st.selectbox("Selecciona un género:", options=genres)
+                selected_genres = st.multiselect("Selecciona géneros:", options=genres)
         
-                # Filtrar datos por género seleccionado
-                filtered_pf = pf[pf['genre'] == selected_genre]
+                if selected_genres:
+                    # Filtrar datos por géneros seleccionados
+                    filtered_pf = pf[pf['genre'].isin(selected_genres)]
         
-                # Rango de años interactivo
-                if not filtered_pf.empty:
-                    min_year = int(filtered_pf['year'].min())
-                    max_year = int(filtered_pf['year'].max())
-                    rango_años = st.slider('Selecciona el rango de años:', min_year, max_year, (min_year, max_year))
-        
-                    # Filtrar datos por rango de años
-                    filtered_pf = filtered_pf[
-                        (filtered_pf['year'] >= rango_años[0]) & (filtered_pf['year'] <= rango_años[1])
-                    ]
-        
+                    # Rango de años interactivo
                     if not filtered_pf.empty:
-                        # Crear gráfico de dispersión con matplotlib
-                        fig, ax = plt.subplots(figsize=(10, 6))
-                        ax.scatter(filtered_pf['release_date'], filtered_pf['stream'], alpha=0.7, c='blue')
+                        min_year = int(filtered_pf['year'].min())
+                        max_year = int(filtered_pf['year'].max())
+                        rango_años = st.slider('Selecciona el rango de años:', min_year, max_year, (min_year, max_year))
         
-                        ax.set_title(f"Fecha de Publicación vs Reproducciones ({selected_genre}, {rango_años[0]}-{rango_años[1]})")
-                        ax.set_xlabel("Fecha de Publicación")
-                        ax.set_ylabel("Reproducciones")
-                        ax.grid(True)
+                        # Filtrar datos por rango de años
+                        filtered_pf = filtered_pf[
+                            (filtered_pf['year'] >= rango_años[0]) & (filtered_pf['year'] <= rango_años[1])
+                        ]
         
-                        # Mostrar el gráfico
-                        st.pyplot(fig)
+                        if not filtered_pf.empty:
+                            # Crear gráfico de dispersión con matplotlib
+                            fig, ax = plt.subplots(figsize=(10, 6))
+                            for genre in selected_genres:
+                                genre_data = filtered_pf[filtered_pf['genre'] == genre]
+                                ax.scatter(genre_data['release_date'], genre_data['stream'], label=genre, alpha=0.7)
+        
+                            ax.set_title(f"Fecha de Publicación vs Reproducciones ({', '.join(selected_genres)})")
+                            ax.set_xlabel("Fecha de Publicación")
+                            ax.set_ylabel("Reproducciones")
+                            ax.legend(title="Géneros")
+                            ax.grid(True)
+        
+                            # Mostrar el gráfico
+                            st.pyplot(fig)
+                        else:
+                            st.warning("No hay datos disponibles para el rango de años seleccionado.")
                     else:
-                        st.warning("No hay datos disponibles para el rango de años seleccionado.")
+                        st.warning("No hay datos disponibles para los géneros seleccionados.")
                 else:
-                    st.warning("No hay datos disponibles para el género seleccionado.")
+                    st.warning("Selecciona al menos un género.")
+
         
 
 elif st.session_state.page == "categoría_3":
