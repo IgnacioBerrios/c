@@ -322,46 +322,23 @@ elif st.session_state.page == "categoría_2":
                         (filtered_pf['year'] >= rango_años[0]) & (filtered_pf['year'] <= rango_años[1])
                     ]
         
-                    # Definir mapa de colores para los géneros
-                    color_map = { 
-                        "R&B": "red",
-                        "Electronic": "yellow",
-                        "Pop": "blue",
-                        "Folk": "green",
-                        "Hip-Hop": "purple",
-                        "Jazz": "orange",
-                        "Classical": "brown",
-                        "Country": "skyblue",
-                        "Reggae": "white",
-                    }
+                    if not filtered_pf.empty:
+                        # Crear gráfico de dispersión con matplotlib
+                        fig, ax = plt.subplots(figsize=(10, 6))
+                        ax.scatter(filtered_pf['release_date'], filtered_pf['stream'], alpha=0.7, c='blue')
         
-                    # Crear gráfico de dispersión
-                    fig = px.scatter(
-                        filtered_pf,
-                        x='release_date',
-                        y='stream',
-                        color='genre',
-                        color_discrete_map=color_map,
-                        title=f"Fecha de Publicación vs Reproducciones ({selected_genre}, {rango_años[0]}-{rango_años[1]})",
-                        labels={"release_date": "Fecha de Publicación", "stream": "Reproducciones", "genre": "Género"},
-                        template="plotly_white",
-                        opacity=0.7
-                    )
+                        ax.set_title(f"Fecha de Publicación vs Reproducciones ({selected_genre}, {rango_años[0]}-{rango_años[1]})")
+                        ax.set_xlabel("Fecha de Publicación")
+                        ax.set_ylabel("Reproducciones")
+                        ax.grid(True)
         
-                    # Personalización del diseño del gráfico
-                    fig.update_layout(
-                        xaxis=dict(title="Fecha de Publicación"),
-                        yaxis=dict(title="Reproducciones"),
-                        title_font_size=16,
-                    )
-        
-                    # Mostrar el gráfico
-                    st.plotly_chart(fig)
+                        # Mostrar el gráfico
+                        st.pyplot(fig)
+                    else:
+                        st.warning("No hay datos disponibles para el rango de años seleccionado.")
                 else:
                     st.warning("No hay datos disponibles para el género seleccionado.")
         
-            if st.button("Volver atrás"):
-                cambiar_pagina("inicio")
 
 elif st.session_state.page == "categoría_3":
     st.header("Contenido de Opción 3")
