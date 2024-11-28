@@ -180,8 +180,8 @@ elif st.session_state.page == "categoría_2":
             plt.tight_layout()
 
             st.pyplot(fig)
-            if st.button("Volver atrás"):
-                cambiar_pagina("categoría_2")
+        if st.button("Volver atrás"):
+            cambiar_pagina("categoría_2")
             
         elif st.session_state.subpage == "subcategoria_b":
             if 'language' not in pf.columns:
@@ -211,8 +211,8 @@ elif st.session_state.page == "categoría_2":
                     )
 
                     st.plotly_chart(fig)
-                if st.button("Volver atrás"):
-                    cambiar_pagina("categoría_2")
+            if st.button("Volver atrás"):
+                cambiar_pagina("categoría_2")
                     
         elif st.session_state.subpage == "subcategoria_c":
             st.header("Subcategoría C: Tendencia de Lanzamiento de Canciones")
@@ -240,8 +240,8 @@ elif st.session_state.page == "categoría_2":
             ax.set_ylabel("Número de Canciones")
             ax.grid(True)
             st.pyplot(fig)
-            if st.button("Volver atrás"):
-                cambiar_pagina("categoría_2")
+        if st.button("Volver atrás"):
+            cambiar_pagina("categoría_2")
                 
         elif st.session_state.subpage == "subcategoria_d":
             st.header("Subcategoría D: Duración Promedio de Canciones por Género") 
@@ -268,8 +268,8 @@ elif st.session_state.page == "categoría_2":
                 ax.set_ylabel('Canción')
             plt.tight_layout()
             st.pyplot(fig)
-            if st.button("Volver atrás"):
-                cambiar_pagina("categoría_2")
+           if st.button("Volver atrás"):
+             cambiar_pagina("categoría_2")
                 
         elif st.session_state.subpage == "subcategoria_e":
             st.header("Duración vs Reproducciones")
@@ -302,8 +302,10 @@ elif st.session_state.page == "categoría_2":
                         )
 
                         st.plotly_chart(fig)
-                    if st.button("Volver atrás"):
-                        cambiar_pagina("categoría_2")
+            
+                if st.button("Volver atrás"):
+                    cambiar_pagina("categoría_2")
+                
             if st.button("Volver atrás"):
                 st.session_state.subpage = None
 
