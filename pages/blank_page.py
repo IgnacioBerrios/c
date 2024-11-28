@@ -180,8 +180,8 @@ elif st.session_state.page == "categoría_2":
             plt.tight_layout()
 
             st.pyplot(fig)
-        if st.button("Volver atrás"):
-            cambiar_pagina("categoría_2")
+            if st.button("Volver atrás"):
+                cambiar_pagina("categoría_2")
             
         elif st.session_state.subpage == "subcategoria_b":
             if 'language' not in pf.columns:
