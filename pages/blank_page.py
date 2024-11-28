@@ -309,40 +309,40 @@ elif st.session_state.page == "categoría_2":
             if st.button("Volver atrás"):
                 st.session_state.subpage = None
 
-    elif st.session_state.page == "categoría_3":
-        st.header("Análisis de Datos")
-        st.write("A continuación, se presenta el análisis de la base de datos, organizado según los gráficos generados:")
+elif st.session_state.page == "categoría_3":
+    st.header("Análisis de Datos")
+    st.write("A continuación, se presenta el análisis de la base de datos, organizado según los gráficos generados:")
     
-        st.subheader("1. Contenido Explícito")
-        st.write("""
-            De este gráfico se pueden inferir dos conclusiones principales:
-            1. La diferencia entre canciones con y sin contenido explícito no varía mucho, pero las canciones con contenido explícito son ligeramente más abundantes.
-            2. Los géneros con más canciones son la electrónica, el hip-hop y el pop.
-        """)
+    st.subheader("1. Contenido Explícito")
+    st.write("""
+         De este gráfico se pueden inferir dos conclusiones principales:
+         1. La diferencia entre canciones con y sin contenido explícito no varía mucho, pero las canciones con contenido explícito son ligeramente más abundantes.
+         2. Los géneros con más canciones son la electrónica, el hip-hop y el pop.
+    """)
     
-        st.subheader("2. Distribución de Idiomas por Género")
-        st.write("""
-            Este gráfico sugiere que los lenguajes más abundantes en los géneros no suelen variar mucho, con diferencias de pequeñas décimas. 
-            Los idiomas, de mayor a menor frecuencia, son: inglés, español, francés, coreano, italiano, japonés y alemán. 
-            Los últimos tres tienden a variar entre los últimos puestos.
-        """)
+    st.subheader("2. Distribución de Idiomas por Género")
+    st.write("""
+        Este gráfico sugiere que los lenguajes más abundantes en los géneros no suelen variar mucho, con diferencias de pequeñas décimas. 
+        Los idiomas, de mayor a menor frecuencia, son: inglés, español, francés, coreano, italiano, japonés y alemán. 
+        Los últimos tres tienden a variar entre los últimos puestos.
+    """)
     
-        st.subheader("3. Tendencia de Lanzamiento de Canciones")
-        st.write("""
-            De este gráfico se pueden deducir dos puntos clave:
-            1. Las canciones comienzan a registrarse desde 1995, probablemente porque a partir de ese año se documentaron digitalmente.
-            2. Cada género presenta un pico definido en algún momento de la línea de tiempo, alcanzando su máximo en un solo período específico.
-        """)
+    st.subheader("3. Tendencia de Lanzamiento de Canciones")
+    st.write("""
+        De este gráfico se pueden deducir dos puntos clave:
+        1. Las canciones comienzan a registrarse desde 1995, probablemente porque a partir de ese año se documentaron digitalmente.
+        2. Cada género presenta un pico definido en algún momento de la línea de tiempo, alcanzando su máximo en un solo período específico.
+    """)
     
-        st.subheader("4. Duración de Canciones por Género")
-        st.write("""
-            Este gráfico muestra que la duración promedio de las canciones es consistente entre géneros, alrededor de 240 segundos.
-        """)
+    st.subheader("4. Duración de Canciones por Género")
+    st.write("""
+        Este gráfico muestra que la duración promedio de las canciones es consistente entre géneros, alrededor de 240 segundos.
+    """)
         
-        st.subheader("5. Duración vs Reproducciones")
-        st.write("""
-            Se observa que, aunque las canciones de cualquier duración pueden ser muy escuchadas, la mayoría de las canciones más reproducidas tienen una duración entre 200 y 300 segundos.
-        """)
+    st.subheader("5. Duración vs Reproducciones")
+    st.write("""
+        Se observa que, aunque las canciones de cualquier duración pueden ser muy escuchadas, la mayoría de las canciones más reproducidas tienen una duración entre 200 y 300 segundos.
+    """)
 
     
     if st.button("Volver atrás"):
