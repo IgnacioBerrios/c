@@ -125,6 +125,8 @@ if st.session_state.page == "inicio":
         if st.button("Analisis"):
             cambiar_pagina("categoría_3")
 
+#irganizacion de la segunda pagina y categorias
+#categoria 1 Dataset
 elif st.session_state.page == "categoría_1":
     opciones = ["Todo"] + pf.columns.tolist()  
     seleccion = st.selectbox("Selecciona una columna para ver", opciones)
@@ -137,7 +139,7 @@ elif st.session_state.page == "categoría_1":
         st.write(pf[seleccion])
     if st.button("Volver atrás"):
         cambiar_pagina("inicio")
-
+#Categoria 2 Graficos
 elif st.session_state.page == "categoría_2":
     if st.session_state.subpage is None:
         st.header("Seleccione una subcategoría")
@@ -202,7 +204,7 @@ elif st.session_state.page == "categoría_2":
                     language_counts = filtered_data['language'].dropna().value_counts().reset_index()
                     language_counts.columns = ['language', 'count']
 
-                    fig = px.pie(
+                    fig = px.pie(                        #Hermano me queria matar tuve que buscar una libreria diferente para poder hacerlo..... no me funcionaba matplotlib
                         language_counts,
                         names='language',
                         values='count',
@@ -215,7 +217,7 @@ elif st.session_state.page == "categoría_2":
                         cambiar_pagina("inicio")
                     
         elif st.session_state.subpage == "subcategoria_c":
-            st.header("Subcategoría C: Tendencia de Lanzamiento de Canciones")
+            st.header("Tendencia de Lanzamiento de Canciones")
             st.write("Aquí se mostrarán los datos de la Subcategoría C.")
             pf['release_date'] = pd.to_datetime(pf['release_date'], errors='coerce')
             pf_filtrado = pf.dropna(subset=['release_date'])
@@ -244,7 +246,7 @@ elif st.session_state.page == "categoría_2":
                 cambiar_pagina("inicio")
                 
         elif st.session_state.subpage == "subcategoria_d":
-            st.header("Subcategoría D: Duración Promedio de Canciones por Género") 
+            st.header("Duración Promedio de Canciones por Género") 
             genero_filtrado = pf[['genre', 'duration']]
             genero_filtrado = genero_filtrado.dropna(subset=['genre', 'duration'])
             
@@ -301,7 +303,7 @@ elif st.session_state.page == "categoría_2":
                             opacity=0.7
                         )
 
-                        st.plotly_chart(fig)
+                        st.plotly_chart(fig)                                #Hermano ame esta libreria, es mucho mas completa que la otra
             
                         if st.button("Volver atrás"):
                             cambiar_pagina("inicio")
